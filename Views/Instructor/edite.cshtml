@@ -1,0 +1,67 @@
+﻿@model InstructorWithDepartmentAndCourseViewModel
+
+@{
+    SelectList department = new SelectList(Model.deptList, "id", "name");
+    SelectList course = new SelectList(Model.crsList, "id", "name");
+}
+
+<form method="post" action="/Instructor/saveUpdate/@Model.id" class="w-25 m-auto mt-1">
+  <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input type="text" class="form-control" name="name" value="@Model.name">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Salary</label>
+    <input type="text" class="form-control" name="salary" value="@Model.salary">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Address</label>
+    <input type="text" class="form-control" name="address" value="@Model.address">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Image</label>
+    <input type="text" class="form-control" name="image" value="@Model.image">
+  </div>
+  <div>
+      <label class="form-label">Change Department</label>
+      <select asp-for="dept_id" class="form-control" asp-items="department" onchange="getCourses()"></select>
+  </div>
+  <div>
+      <label class="form-label">Change Course</label>
+      <select asp-for="crs_id" class="form-control"></select>
+  </div>
+  <div class="text-center mt-3">
+    <input type="submit" class="btn btn-success" value="Update">
+  </div>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    
+    window.addEventListener('load', () => {
+        getCourses();
+    })
+
+    function getCourses(){
+        let dept_id = document.getElementById("dept_id").value;
+
+        $.ajax(
+            {
+                url: `/Instructor/getCourses?dept_id=${dept_id}`, 
+                success: function(result){
+                    document.getElementById("crs_id").innerHTML = "";
+                    for(let course of result){
+                        if(course.id == @Model.crs_id){
+                            document.getElementById("crs_id").innerHTML +=
+                            `<option value="${course.id}" selected>${course.name}</option>`
+                        }
+                        else{
+                            document.getElementById("crs_id").innerHTML +=
+                            `<option value="${course.id}">${course.name}</option>`
+                        }   
+                    }
+                }
+            });
+    }
+</script>

@@ -1,0 +1,33 @@
+﻿@model TraineeWithCourseAndDegreeViewModel
+
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Course</th>
+        <th>Degree</th>
+    </tr>
+    <tr>
+        <td rowspan="@(Model.course.Count+1)">@Model.name</td>
+        
+        @*@foreach (var item in Model.course)*@
+        @foreach (var item in Model.degree)
+        {
+            <tr>
+                
+                <td style="color: @item.Value">@Model.course[Model.count++]</td>
+                <td style="color: @item.Value">@item.Key</td>
+
+               @* @if(Model.degree[Model.count] > 50)
+                {
+                    <td style="color: #05e505">@item</td>
+                    <td style="color: #05e505">@Model.degree[Model.count++]</td>
+                }
+                else
+                {
+                    <td style="color: red">@item</td>
+                    <td style="color: red">@Model.degree[Model.count++]</td>
+                }*@
+            </tr>
+        }
+    </tr>
+</table>

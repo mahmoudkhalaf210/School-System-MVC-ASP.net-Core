@@ -1,0 +1,67 @@
+﻿@model NewInstructorDataViewModel
+
+<form method="post" action="/Instructor/saveNewCtr" class="w-25 m-auto mt-1">
+  <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input type="text" class="form-control" name="name" value="@Model.name">
+        @{
+            NewInstructorDataViewModel ins = new NewInstructorDataViewModel();
+        } 
+        @*@Html.TextBox("name", ins.ins.name , new {@class="form-control"})*@
+        @*@Html.LabelFor(n => n.ins.name, new {@class="label-control"})
+        @Html.TextBoxFor(e => e.ins.name, new{@class="form-control"})
+       *@
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Salary</label>
+    <input type="text" class="form-control" name="salary" value="@Model.salary">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Address</label>   
+    <input type="text" class="form-control" name="address" value="@Model.address">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Image</label>
+    <input type="text" class="form-control" name="image" value="@Model.image">
+  </div>
+  <div>
+      <label class="form-label">Choose Department</label>
+      <select class="form-control" name="dept_id" id="dept" onchange="uploadCourses()">
+         @* <option value="0" selected>----- click to add department -----</option>*@
+          @foreach (var item in Model.deptList)
+          {
+              <option value="@item.id">@item.name</option>
+          }
+      </select>
+  </div>
+  <div>
+      <label class="form-label">Choose Course</label>
+      <select class="form-control" name="crs_id" id="crs"></select>
+  </div>
+  <div class="text-center mt-3">
+    <input type="submit" class="btn btn-primary" value="Add">
+  </div>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    window.addEventListener('load', () => {
+        uploadCourses()
+    })
+    function uploadCourses(){
+        let dept_id = document.getElementById("dept").value;
+
+        $.ajax(
+            {
+                url: `/Instructor/getCourses?dept_id=${dept_id}`, 
+                success: function(result){
+                    document.getElementById("crs").innerHTML = "";
+                    for(let course of result){
+                        document.getElementById("crs").innerHTML +=
+                        `<option value=${course.id}>${course.name}</option>`
+                    }
+                }
+            });
+    }
+</script>

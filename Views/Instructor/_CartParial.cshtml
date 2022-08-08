@@ -1,0 +1,14 @@
+﻿@model Instructor
+
+<div class="col-lg-4">
+    <div class="card" style="width:400px">
+    <img class="card-img-top" src="/Images/@Model.image" alt="Card image" style="width:100%; height: 450px">
+    <div class="card-body">
+      <h4 class="card-title">@Model.name</h4>
+      <p class="card-text">@Model.address</p>
+      @*<a href="/Instructor/details/@ins.id" class="btn btn-primary">See Profile</a>*@
+      @*@Html.ActionLink("View Profile","details","Instructor", new{ id = @ins.id }, new {@class="btn btn-primary"})*@
+      <a class="btn btn-primary" asp-action="details" asp-controller="Instructor" asp-route-id="@Model.id"> View Profile </a>
+    </div>
+    </div>
+</div>

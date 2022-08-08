@@ -1,0 +1,22 @@
+﻿@model Instructor
+
+<h1>Instructor Info</h1>
+<ul>
+    <li>Name: @Model.name</li>
+    <li>Address: @Model.address</li>
+    <li>Salary: @Model.salary</li>
+</ul>
+
+<hr>
+
+<h1>Extra Info</h1>
+<ul>
+    <li>Message: @ViewData["message"]</li>
+    <li>Temprature: @((int) ViewData["temp"] + 10)</li>
+</ul>
+<select>
+    @foreach (string item in (List<string>) ViewData["address"])
+    {
+        <option>@item</option>
+    }
+</select>
